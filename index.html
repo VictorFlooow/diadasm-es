@@ -8,57 +8,86 @@
   <title>Feliz Dia das Mães 🌸</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="src/style.css" />
 </head>
 <body>
 
-  <!-- Pétalas animadas -->
-  <div class="petals" id="petals" aria-hidden="true"></div>
+  <!-- Estrelinhas de fundo -->
+  <div class="starfield" id="starfield" aria-hidden="true"></div>
+
+  <!-- Ambient glow top -->
+  <div class="ambient-top" aria-hidden="true"></div>
 
   <main class="app" id="app">
 
-    <!-- Estado: Carregando -->
+    <!-- ── Estado: Carregando ── -->
     <div class="scene" id="scene-loading">
-      <div class="loading-icon" aria-label="Carregando">🌸</div>
-      <p class="loading-text">preparando sua mensagem...</p>
+      <div class="loading-ring" aria-label="Carregando"></div>
+      <p class="loading-label">preparando algo especial para você...</p>
     </div>
 
-    <!-- Estado: Vídeo -->
+    <!-- ── Estado: Vídeo ── -->
     <div class="scene scene--video" id="scene-video" hidden>
-      <header class="page-header">
-        <span class="eyebrow">uma mensagem especial para você</span>
-        <h1 class="main-title">Feliz Dia<br />das Mães</h1>
-        <div class="title-divider" aria-hidden="true"></div>
+
+      <header class="hero-header">
+        <div class="hero-ornament" aria-hidden="true">✦</div>
+        <p class="hero-eyebrow">para você, com todo nosso amor</p>
+        <h1 class="hero-title">
+          <span class="hero-title__top">Feliz Dia</span>
+          <span class="hero-title__bottom">das Mães</span>
+        </h1>
+        <div class="hero-rule" aria-hidden="true"></div>
       </header>
 
-      <div class="video-wrap">
-        <video
-          id="video-player"
-          class="video-player"
-          controls
-          playsinline
-          preload="metadata"
-        ></video>
-        <div class="video-glow" aria-hidden="true"></div>
+      <!-- Vídeo com borda rotativa dourada -->
+      <div class="video-frame" id="video-frame">
+        <div class="video-inner">
+          <video
+            id="video-player"
+            class="video-player"
+            controls
+            playsinline
+            preload="metadata"
+          ></video>
+        </div>
+        <!-- Cantos decorativos -->
+        <span class="corner corner--tl" aria-hidden="true"></span>
+        <span class="corner corner--tr" aria-hidden="true"></span>
+        <span class="corner corner--bl" aria-hidden="true"></span>
+        <span class="corner corner--br" aria-hidden="true"></span>
       </div>
 
+      <!-- Divisor -->
+      <div class="section-divider" aria-hidden="true">
+        <span class="divider-line"></span>
+        <span class="divider-gem">❤</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <!-- Mensagem -->
       <section class="message" aria-label="Mensagem para a mãe">
         <p class="msg-line" style="--i:0">Mãe,</p>
-        <p class="msg-line" style="--i:1">as palavras nunca foram suficientes</p>
-        <p class="msg-line" style="--i:2">para expressar tudo que você representa.</p>
-        <p class="msg-line" style="--i:3">Mas neste dia quero que saiba:</p>
-        <p class="msg-line" style="--i:4">o seu amor foi o maior presente</p>
-        <p class="msg-line" style="--i:5">da minha vida inteira.</p>
-        <p class="msg-line msg-line--sig" style="--i:6">
-          Com todo o meu amor. <span class="heart" aria-hidden="true">❤</span>
+        <p class="msg-line" style="--i:1">cada abraço seu foi meu porto seguro.</p>
+        <p class="msg-line" style="--i:2">Cada palavra, um caminho.</p>
+        <p class="msg-line" style="--i:3">Cada sorriso, uma memória</p>
+        <p class="msg-line" style="--i:4">que guardo para sempre.</p>
+        <p class="msg-line" style="--i:5">Obrigado por tudo que você é.</p>
+        <p class="msg-sig" style="--i:6">
+          Com todo o meu amor
+          <span class="sig-heart" aria-hidden="true">❤</span>
         </p>
       </section>
+
+      <footer class="page-footer" aria-hidden="true">
+        <span>✦ ── ✦ ── ✦</span>
+      </footer>
+
     </div>
 
-    <!-- Estado: Erro -->
+    <!-- ── Estado: Erro ── -->
     <div class="scene scene--error" id="scene-error" hidden>
-      <div class="error-icon" aria-hidden="true">🥀</div>
+      <div class="error-seal" aria-hidden="true">🥀</div>
       <h1 class="error-title">Link não encontrado</h1>
       <p class="error-body">
         Este link não existe ou pode ter expirado.<br />

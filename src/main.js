@@ -10,41 +10,33 @@
   const params = new URLSearchParams(window.location.search);
   const key = params.get('v')?.trim().toLowerCase();
 
-  // No key at all → error
-  if (!key) {
-    showScene('error');
-    return;
-  }
+  if (!key) { showScene('error'); return; }
 
-  // Fetch video map
   let videoMap;
   try {
     const res = await fetch('src/videos.json');
-    if (!res.ok) throw new Error('JSON not found');
+    if (!res.ok) throw new Error();
     videoMap = await res.json();
   } catch {
     showScene('error');
     return;
   }
 
-  // Key not in map → error
   if (!videoMap[key]) {
     showScene('error');
     return;
   }
 
-  // Load video
-  const filename = videoMap[key];
   const player = document.getElementById('video-player');
-  player.src = `videos/${encodeURIComponent(filename)}`;
+  player.src = `videos/${encodeURIComponent(videoMap[key])}`;
   player.load();
 
   showScene('video');
-  spawnPetals();
+  spawnSparkles();
   observeMessageLines();
 })();
 
-// ── Scene switching ──────────────────────────────────────────────────────────
+/* ── Troca de cenas ─────────────────────────────────────────────────────── */
 function showScene(name) {
   ['loading', 'video', 'error'].forEach(id => {
     const el = document.getElementById(`scene-${id}`);
@@ -53,35 +45,37 @@ function showScene(name) {
   });
 }
 
-// ── Pétalas animadas ─────────────────────────────────────────────────────────
-function spawnPetals() {
-  const container = document.getElementById('petals');
-  const emojis = ['🌸', '🌺', '🌷', '💮', '🌸', '🌸'];
+/* ── Sparkles (estrelinhas de fundo) ───────────────────────────────────── */
+function spawnSparkles() {
+  const container = document.getElementById('starfield');
+  const glyphs = ['✦', '✦', '·', '·', '✧', '·'];
 
-  for (let i = 0; i < 18; i++) {
-    const petal = document.createElement('span');
-    petal.className = 'petal';
-    petal.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    petal.setAttribute('aria-hidden', 'true');
+  for (let i = 0; i < 28; i++) {
+    const star = document.createElement('span');
+    star.className = 'sparkle';
+    star.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+    star.setAttribute('aria-hidden', 'true');
 
-    const size   = Math.random() * 14 + 10;
-    const left   = Math.random() * 100;
-    const delay  = Math.random() * 10;
-    const dur    = Math.random() * 6 + 7;
+    const size  = Math.random() * 7 + 5;
+    const left  = Math.random() * 100;
+    const top   = Math.random() * 100;
+    const delay = Math.random() * 5;
+    const dur   = Math.random() * 4 + 3;
 
-    petal.style.cssText = `
+    star.style.cssText = `
       left: ${left}%;
+      top: ${top}%;
       font-size: ${size}px;
       animation-delay: ${delay}s;
       animation-duration: ${dur}s;
     `;
-    container.appendChild(petal);
+    container.appendChild(star);
   }
 }
 
-// ── Reveal das linhas da mensagem ────────────────────────────────────────────
+/* ── Reveal das linhas da mensagem ─────────────────────────────────────── */
 function observeMessageLines() {
-  const lines = document.querySelectorAll('.msg-line');
+  const lines = document.querySelectorAll('.msg-line, .msg-sig');
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -90,7 +84,7 @@ function observeMessageLines() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15 });
+  }, { threshold: 0.1 });
 
   lines.forEach(line => observer.observe(line));
 }
